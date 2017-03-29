@@ -96,6 +96,11 @@ class App extends Component {
         <div className="App-navigation">
           <p>Example navigation:</p>
 
+          <h3>Services:</h3>
+          <ul>
+            <li><Link to="/services">Services by Category</Link></li>
+          </ul>          
+
           <h3>Users:</h3>
 
           <ul>

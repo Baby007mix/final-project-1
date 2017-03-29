@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Router, Route, browserHistory } from 'react-router';
 import App from './App';
 import OrganisationPage from './pages/Organisation';
+import SBServicesPage from './pages/SBServices';
 import UsersPage from './pages/Users';
 
 class Routes extends Component {
@@ -10,6 +11,7 @@ class Routes extends Component {
       <Router history={browserHistory}>
         <Route path="/" component={App}>
           <Route path="organisations/:id" component={OrganisationPage} />
+          <Route path="organisations/services/:id" component={SBServicesPage}/>
           <Route path="users" component={UsersPage} />
         </Route>
       </Router>
