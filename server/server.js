@@ -1,6 +1,8 @@
-import express from 'express'
-import mongoose from 'mongoose'
+import express from 'express';
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
 import path from 'path';
+import routes from './controller/routes';
 
 if (process.env.MONGODB_URI) {
   console.log('Connecting to remote mongo instance');
@@ -14,10 +16,22 @@ console.log('Connected to mongo');
 
 const app = express();
 
-app.get('/api', (req, res) => {
-  res.send('hello world')
-})
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
+app.set('views', path.join(process.cwd(), 'views'));
+app.set('view engine', 'hbs');
+
+app.get('/api/migrate', routes.getImport);
+app.get('/api/all/organisation', routes.getAllOrganisation);
+app.get('/api/organisation/category', routes.getCategory);
+app.get('/api/organisation/category/:category', routes.getOrganisation);
+app.get('/api/all/users', routes.getUsers);
+app.get('/api/organisation/postcode', routes.getPostcode);
+app.get('/api/organisation/search', routes.getSearchedOrganisation);
+app.get('/api/organisation/borough', routes.getBorough);
+app.get('/api/organisation/area', routes.getArea);
+app.post('/api/organisation/post', routes.postOrganisation);
 
 // ********************************************************
 // ********************Production**************************
@@ -29,8 +43,6 @@ app.use(express.static(path.resolve(__dirname, '..', 'build')));
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
 });
-
-
 
 const port = process.env.PORT ? process.env.PORT : 3001;
 
